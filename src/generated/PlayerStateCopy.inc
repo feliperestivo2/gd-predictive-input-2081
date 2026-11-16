@@ -32,7 +32,6 @@ dst->m_scaleXRelated2 = src->m_scaleXRelated2;
 dst->m_groundYVelocity = src->m_groundYVelocity;
 dst->m_yVelocityRelated = src->m_yVelocityRelated;
 dst->m_scaleXRelated3 = src->m_scaleXRelated3;
-dst->m_collidingBetweenSteps = src->m_collidingBetweenSteps;
 dst->m_scaleXRelated4 = src->m_scaleXRelated4;
 dst->m_scaleXRelated5 = src->m_scaleXRelated5;
 dst->m_isCollidingWithSlope = src->m_isCollidingWithSlope;
