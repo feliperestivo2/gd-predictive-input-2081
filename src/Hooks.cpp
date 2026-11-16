@@ -403,7 +403,7 @@ namespace {
     // GJBaseGameLayer::gameEventTriggered drives Event triggers in levels. Its
     // 2.2091 binding is a placeholder, so it is hooked by address (found by
     // decompiling handleButton, which raises JumpPush/JumpRelease through it).
-    constexpr uintptr_t kGameEventTriggered = 0x33ac80;
+    constexpr uintptr_t kGameEventTriggered = 0x231ff0;
     using GameEventFn = void (*)(GJBaseGameLayer*, int, int, int);
 
     void gameEventTriggeredHook(GJBaseGameLayer* self, int event, int material, int playerID) {
