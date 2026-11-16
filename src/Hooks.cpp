@@ -79,10 +79,10 @@ class $modify(PIBPlayLayer, PlayLayer) {
         }
     };
 
-    bool init(GJGameLevel* level, bool dontCreateObjects) {
+    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
         inputQueue().reset();
         lastSave.clear();
-        if (!PlayLayer::init(level, dontCreateObjects)) return false;
+        if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
         g_playLayer = this;
         m_fields->owner = this;
 
