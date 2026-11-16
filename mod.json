@@ -1,7 +1,7 @@
 {
-    "geode": "5.11.2",
+    "geode": "5.6.0",
     "gd": {
-        "win": "2.2091"
+        "win": "2.2081"
     },
     "id": "zakme.predictive_input",
     "name": "Predictive Input Buffer",
