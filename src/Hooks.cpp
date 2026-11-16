@@ -11,6 +11,7 @@
 #include <Geode/modify/PlayerObject.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 
+#include <limits>
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -70,7 +71,11 @@ class $modify(PIBPlayLayer, PlayLayer) {
     // Run first so the simulator's fake deaths never reach other mods
     // (death trackers, hitbox-on-death overlays).
     static void onModify(auto& self) {
-        (void)self.setHookPriorityPre("PlayLayer::destroyPlayer", Priority::First);
+        // Earliest possible priority: other mods (hitbox-on-death, death
+        // trackers) often hook destroyPlayer before Priority::First.
+        auto res = self.setHookPriority("PlayLayer::destroyPlayer", std::numeric_limits<int32_t>::min() + 1);
+        if (!res) log::error("Failed to set destroyPlayer priority: {}", res.unwrapErr());
+        else log::info("destroyPlayer hook priority set to earliest");
     }
 
     struct Fields {
@@ -130,6 +135,8 @@ class $modify(PIBPlayLayer, PlayLayer) {
 
     void destroyPlayer(PlayerObject* player, GameObject* object) {
         if (Simulator::get().isSimPlayer(player)) {
+            static bool loggedOnce = false;
+            if (!loggedOnce) { loggedOnce = true; log::info("Simulated death intercepted before other mods"); }
             Simulator::get().markDead();
             return;
         }
