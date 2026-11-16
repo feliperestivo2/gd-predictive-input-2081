@@ -67,6 +67,12 @@ namespace {
 }
 
 class $modify(PIBPlayLayer, PlayLayer) {
+    // Run first so the simulator's fake deaths never reach other mods
+    // (death trackers, hitbox-on-death overlays).
+    static void onModify(auto& self) {
+        (void)self.setHookPriorityPre("PlayLayer::destroyPlayer", Priority::First);
+    }
+
     struct Fields {
         Ref<CCLayer> simContainer;
         Ref<PlayerObject> simPlayer;
