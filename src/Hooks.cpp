@@ -113,10 +113,14 @@ class $modify(PIBPlayLayer, PlayLayer) {
         label->setScale(0.5f);
         label->setOpacity(180);
         label->setPosition({ 4.f, CCDirector::get()->getWinSize().height - 14.f });
-        label->setZOrder(1000);
-        this->addChild(label);
+        // Attach to the UI layer (pause button, progress bar) so the label
+        // always draws above the level and other mods' overlays.
+        CCNode* parent = m_uiLayer ? static_cast<CCNode*>(m_uiLayer) : static_cast<CCNode*>(this);
+        parent->addChild(label, 1000);
         m_fields->status = label;
         this->refreshStatus();
+        log::info("Status label attached to {} (visible: {})",
+            m_uiLayer ? "UILayer" : "PlayLayer", settings().showStatus);
         return true;
     }
 
